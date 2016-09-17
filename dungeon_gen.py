@@ -131,12 +131,8 @@ class Level:
             room = rooms[r]
             self.label(room.left + room.w/2, room.top + room.h/2, room_type)
         
-        
-    def create_rooms(self):
+    def create_rooms_scatter(self, num_rooms = 8):
         rooms = []
-        num_rooms = 8
-        
-        #creation phase
         for r in range(num_rooms):
             num_tries = 20
             for t in range(num_tries):
@@ -154,6 +150,14 @@ class Level:
                     print("last chance")
                     self.carve_room(room)
                     rooms.append(room)
+
+        return rooms
+                    
+    def create_rooms(self):
+        num_rooms = 8
+
+        #creation phase
+        rooms = self.create_rooms_scatter(num_rooms)
 
         #connection phase
         #self.connect_rooms_naive(rooms)
