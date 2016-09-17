@@ -18,7 +18,8 @@ def printv(msg):
     if verbose:
         print(msg)
 
-room_names = ["toilet", "foyer", "temple", "bedroom", "kitchen", "jail", "dump", "boardroom", "storage", "atrium", "workshop"]
+room_names = ["toilet", "foyer", "temple", "bedroom", "kitchen", "jail", "dump", "boardroom", "storage", "atrium", "workshop", "fireplace"]
+room_names+= ["torture", "rubble", "garden", "well", "morgue", "gamesroom", "stage", "shower", "library"]
 
 
 class Room:
