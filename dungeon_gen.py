@@ -152,9 +152,9 @@ class Level:
                     rooms.append(room)
 
         return rooms
-                    
+
     def create_rooms(self):
-        num_rooms = 8
+        num_rooms = random.randint(6, 12)
 
         #creation phase
         rooms = self.create_rooms_scatter(num_rooms)
