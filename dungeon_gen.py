@@ -78,8 +78,32 @@ class Level:
     def connect_rooms(self, room0, room1):
         self.carve_passage(room0.left + room0.w/2, room0.top + room0.h/2, room1.left + room1.w/2, room1.top + room1.h/2)
         
+    def connect_rooms_naive(self, rooms):
+        room_connections = [[]]*len(rooms)
+        connect_it = 0
+        all_rooms_connected = False
+
+        for r in range(0, len(rooms)-1):
+            r_other = random.randint(r+1, len(rooms)-1)
+
+            #if r_other is already connected, don't connect
+            if len(room_connections[r_other]):
+                continue
+            
+            room_connections[r].append(r_other)
+            room_connections[r_other].append(r)
+        
+        for r in range(0, len(rooms)):
+            for r_index in range(len(room_connections[r])):
+                r_other = room_connections[r][r_index]
+                self.connect_rooms(rooms[r], rooms[ r_other ])
+
+    def connect_rooms_linear(self, rooms):
+        for r in range(0, len(rooms)-1):
+            self.connect_rooms(rooms[r], rooms[r+1])
+        
     def create_rooms(self):
-        self.rooms = []
+        rooms = []
         num_rooms = 8
         
         #creation phase
@@ -93,34 +117,18 @@ class Level:
                 room = Room(top, left, w, h)
                 if self.is_room_solid(room, 1):
                     self.carve_room(room)
-                    self.rooms.append(room)
+                    rooms.append(room)
                     break
                 elif t == num_tries - 1:
                     #last chance, make it anyway!
                     print("last chance")
                     self.carve_room(room)
-                    self.rooms.append(room)
+                    rooms.append(room)
 
         #connection phase
-        room_connections = [[]]*num_rooms
-        connect_it = 0
-        all_rooms_connected = False
-
-        for r in range(0, num_rooms-1):
-            r_other = random.randint(r+1, num_rooms-1)
-
-            #if r_other is already connected, don't connect
-            if len(room_connections[r_other]):
-                continue
-            
-            room_connections[r].append(r_other)
-            room_connections[r_other].append(r)
+        #self.connect_rooms_naive(rooms)
+        self.connect_rooms_linear(rooms)
         
-        for r in range(0, num_rooms):
-            for r_index in range(len(room_connections[r])):
-                r_other = room_connections[r][r_index]
-                self.connect_rooms(self.rooms[r], self.rooms[ r_other ])
-                
     def __init__(self):
         self.initial_level_gen()
         self.create_rooms()
