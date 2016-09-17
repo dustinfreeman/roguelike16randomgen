@@ -18,10 +18,19 @@ def printv(msg):
     if verbose:
         print(msg)
 
-room_names = ["toilet", "foyer", "temple", "bedroom", "kitchen", "jail", "dump", "boardroom", "storage", "atrium", "workshop", "fireplace"]
-room_names+= ["torture", "rubble", "garden", "well", "morgue", "gamesroom", "stage", "shower", "library"]
+def gen_room_names():
+    room_names = ["toilet", "foyer", "temple", "bedroom", "kitchen", "jail", "dump", "board room", "storage", "atrium", "workshop", "fireplace"]
+    room_names+= ["torture chamber", "rubble", "garden", "well", "morgue", "gamesroom", "stage", "shower", "library"]
+    room_names+= ["brewery", "tavern", "abyss", "crypt", "pool", "barber"]
+    room_names+= ["showers", "barracks", "granary", "nursery", "lab"]
+    room_names+= ["armour", "classroom", "lounge", "theatre", "concert hall"]
+    room_names+= ["throne room", "waiting room", "hospital", "lectural hall", "ready room", "zoo", "ballroom", "hearth"]
+    room_names+= ["entertainment centre", "command centre", "map room", "computer room", "steam baths", "mess hall", "dining hall"]
+    room_names+= ["ritual chamber", "parking garage", "trapdoor", "excercise room", "gallery", "cinema", "server room", "vault"]
+    room_names+= ["office space", "loft", "warehouse", "shop", "crematorium", "sports court", "cold storage", "tailor", "laundry room"]
 
-
+    return room_names
+    
 class Room:
 
     def __init__(self, top, left, w, h):
@@ -111,6 +120,7 @@ class Level:
             self._level[y][x0 + i] = word[i]
         
     def label_rooms(self, rooms):
+        room_names = gen_room_names()
         for r in range(len(rooms)):
             rni = random.randint(0, len(room_names)-1)
             room_type = room_names[rni]
