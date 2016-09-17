@@ -18,7 +18,9 @@ def printv(msg):
     if verbose:
         print(msg)
 
-    
+room_names = ["toilet", "foyer", "temple", "bedroom", "kitchen", "jail", "dump", "boardroom", "storage", "atrium", "workshop"]
+
+
 class Room:
 
     def __init__(self, top, left, w, h):
@@ -101,6 +103,19 @@ class Level:
     def connect_rooms_linear(self, rooms):
         for r in range(0, len(rooms)-1):
             self.connect_rooms(rooms[r], rooms[r+1])
+
+    def label(self, x, y, word):
+        x0 = x - len(word)/2
+        for i in range(0, len(word)):
+            self._level[y][x0 + i] = word[i]
+        
+    def label_rooms(self, rooms):
+        for r in range(len(rooms)):
+            rni = random.randint(0, len(room_names)-1)
+            room_type = room_names[rni]
+            room = rooms[r]
+            self.label(room.left + room.w/2, room.top + room.h/2, room_type)
+        
         
     def create_rooms(self):
         rooms = []
@@ -128,6 +143,8 @@ class Level:
         #connection phase
         #self.connect_rooms_naive(rooms)
         self.connect_rooms_linear(rooms)
+
+        self.label_rooms(rooms)
         
     def __init__(self):
         self.initial_level_gen()
