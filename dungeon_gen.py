@@ -69,7 +69,7 @@ class Level:
 
     def carve_passage(self, x0, y0, x1, y1):
         #x
-        passage0 = Room(y0, min(x0,x1), abs(x1 - x0), 1)
+        passage0 = Room(y0, min(x0,x1), abs(x1 - x0) + 1, 1)
         self.carve_room(passage0, "carve_passage")
         #y
         passage1 = Room(min(y0,y1), x1, 1, abs(y1 - y0))
