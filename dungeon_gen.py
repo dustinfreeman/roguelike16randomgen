@@ -20,10 +20,10 @@ def printv(msg):
 
 def gen_room_names():
     room_names = ["toilet", "foyer", "temple", "bedroom", "kitchen", "jail", "dump", "board room", "storage", "atrium", "workshop", "fireplace"]
-    room_names+= ["torture chamber", "rubble", "garden", "well", "morgue", "gamesroom", "stage", "shower", "library"]
+    room_names+= ["torture chamber", "rubble", "garden", "well", "morgue", "games room", "stage", "shower", "library"]
     room_names+= ["brewery", "tavern", "abyss", "crypt", "pool", "barber"]
     room_names+= ["showers", "barracks", "granary", "nursery", "lab"]
-    room_names+= ["armour", "classroom", "lounge", "theatre", "concert hall"]
+    room_names+= ["armoury", "classroom", "lounge", "theatre", "concert hall"]
     room_names+= ["throne room", "waiting room", "hospital", "lectural hall", "ready room", "zoo", "ballroom", "hearth"]
     room_names+= ["entertainment centre", "command centre", "map room", "computer room", "steam baths", "mess hall", "dining hall"]
     room_names+= ["ritual chamber", "parking garage", "trapdoor", "excercise room", "gallery", "cinema", "server room", "vault"]
@@ -114,10 +114,14 @@ class Level:
         for r in range(0, len(rooms)-1):
             self.connect_rooms(rooms[r], rooms[r+1])
 
-    def label(self, x, y, word):
-        x0 = x - len(word)/2
-        for i in range(0, len(word)):
-            self._level[y][x0 + i] = word[i]
+    def label(self, x, y, phrase):
+        words = phrase.split()
+        y0 = y - len(words)/2
+        for w in range(len(words)):
+            word = words[w]
+            x0 = x - len(word)/2
+            for i in range(0, len(word)):
+                self._level[y0+w][x0 + i] = word[i]
         
     def label_rooms(self, rooms):
         room_names = gen_room_names()
